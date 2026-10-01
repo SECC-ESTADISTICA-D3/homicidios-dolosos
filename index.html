@@ -189,8 +189,8 @@ body.cmp .fl,body.cmp #hero,body.cmp #nota{display:none}
  #reporte .rf{margin-top:10px;border-top:1px solid #d3dced;padding-top:6px;font-size:7.5pt;color:#485b7c;text-align:center}
 }
 /* ===== Mapa por departamento y localidad ===== */
-:root{--mz:#142a52;--mbd:#071328}
-.light{--mz:#e4ebf5;--mbd:#fff}
+:root{--mz:#6cb4e4;--mbd:#071328}
+.light{--mz:#cfe6f7;--mbd:#fff}
 .card h3 small{display:block;margin-top:6px;font-size:.74rem;letter-spacing:.02em;text-transform:none;font-weight:600;color:var(--mut)}
 .mp-box{display:grid;gap:22px;grid-template-columns:minmax(0,1fr)}
 @media (min-width:1100px){.mp-box{grid-template-columns:minmax(0,1.9fr) minmax(0,1fr);align-items:start;gap:28px}}
@@ -393,7 +393,7 @@ function mapa(el,rr){
   return`<g class="mp-b"><title>${tt(LN.get(k),o)}</title>${i<3?`<circle class="pul" cx="${p.x}" cy="${p.y}" r="${r}"/>`:''}<circle cx="${p.x}" cy="${p.y}" r="${r}"/></g>`}).join('');
  const dl=keys.map(k=>({k,n:N(k),o:Z(k)})).filter(x=>x.o.c>0).sort(srt),
   zero=keys.filter(k=>!Z(k).c).map(N).sort((a,b)=>a.localeCompare(b,'es')),
-  ll=[...L].map(([k,o])=>({k,n:LN.get(k),o})).sort(srt),llv=pr?ll.slice(0,12):ll;
+  ll=[...L].map(([k,o])=>({k,n:LN.get(k),o})).sort(srt),llv=ll;
  const li=(n,o,c,d)=>`<li${d?` data-d="${d}" tabindex="0"`:''}><i class="pt" style="background:${c}"></i><span class="nm">${n}</span><b class="c">${o.c}</b><b class="v">${o.v}</b></li>`;
  const head=t=>`<div class="mp-lh"><span></span><span>${t}</span><span>Causas</span><span>Víctimas</span></div>`;
  el.innerHTML=`<div class="mp-box"><div class="mp-map">
@@ -407,8 +407,7 @@ function mapa(el,rr){
   ${head('Departamento')}<ul class="mp-list">${dl.map(x=>li(x.n,x.o,col(V(x.o)),x.k)).join('')}</ul>
   ${zero.length?`<p class="mp-zero">Sin registros: ${zero.join(', ')}.</p>`:''}
   <h4 class="mp-h2">Localidad</h4>${head('Localidad')}
-  <ul class="mp-list${pr?'':' sc'}">${llv.map(x=>li(x.n,x.o,'#ffb300')).join('')||'<li class="vac">Sin localidades cargadas en la selección.</li>'}</ul>
-  ${pr&&ll.length>12?`<p class="mp-zero">Se muestran las 12 localidades con más causas (de ${ll.length}).</p>`:''}
+  <ul class="mp-list">${llv.map(x=>li(x.n,x.o,'#ffb300')).join('')||'<li class="vac">Sin localidades cargadas en la selección.</li>'}</ul>
   <p class="mp-nota">El color de cada departamento es proporcional a su cantidad de ${M==='c'?'causas':'víctimas'} (escala de raíz cuadrada, para que también se distingan los de pocos casos); los círculos marcan localidades con ubicación en el mapa. Capital se desglosa por jurisdicción policial. Límites simplificados con fines ilustrativos (fuente: IGN / BAHRA).${sd?` <b>${nb(sd,'causa','causas')} sin departamento cargado en el Excel (no se pintan en el mapa).</b>`:''}</p>
  </div></div>`;
  const svg=el.querySelector('.mp-map>svg'),det=el.querySelector('.mp-det'),hint=el.querySelector('.mp-hint'),g=svg.querySelector('g');
@@ -418,7 +417,7 @@ function mapa(el,rr){
   const o=Z(k),cap=k==='CAPITAL',sub=[...(DD.get(k)||new Map())].map(([n,x])=>({n,o:x})).sort(srt);
   det.innerHTML=`<div class="mp-dh"><h5>${N(k)}</h5><button type="button" class="mp-x" aria-label="Cerrar detalle">✕</button></div>
    <div class="mp-tiles"><div class="tl c"><b>${o.c}</b><span>Causas</span></div><div class="tl v"><b>${o.v}</b><span>Víctimas</span></div><div class="tl f"><b>${o.f}</b><span>Femicidios</span></div><div class="tl o"><b>${o.ro}</b><span>Ocasión de robo</span></div></div>
-   ${o.c?`<p class="mp-sub">${cap?'Por jurisdicción policial':'Por localidad'}</p><div class="mp-lh"><span></span><span>${cap?'Jurisdicción':'Localidad'}</span><span>Causas</span><span>Víctimas</span></div><ul class="mp-list sc">${sub.map(x=>li(x.n,x.o,'#ffb300')).join('')}</ul>`:'<p class="mp-zero">Sin registros en este departamento para la selección.</p>'}`;
+   ${o.c?`<p class="mp-sub">${cap?'Por jurisdicción policial':'Por localidad'}</p><div class="mp-lh"><span></span><span>${cap?'Jurisdicción':'Localidad'}</span><span>Causas</span><span>Víctimas</span></div><ul class="mp-list">${sub.map(x=>li(x.n,x.o,'#ffb300')).join('')}</ul>`:'<p class="mp-zero">Sin registros en este departamento para la selección.</p>'}`;
   det.classList.add('on');if(hint)hint.classList.add('off');if(innerWidth<700)det.scrollIntoView({block:'nearest',behavior:'smooth'});det.querySelector('.mp-x').addEventListener('click',close)};
  mapClose=close;
  svg.addEventListener('click',e=>{const p=e.target.closest('path[data-d]');if(!p)return close();p.dataset.d===mapSel?close():open(p.dataset.d)});
