@@ -279,6 +279,43 @@ body.cmp .fl,body.cmp #hero,body.cmp #nota{display:none}
 .tlab{min-width:5.6em;text-align:left}
 @media (max-width:640px){.tlab{display:none}.tgl{padding:.32em}}
 @media print{.tbar{display:none!important}}
+/* ===== Impresión: encabezado, títulos de sección, etiquetas de año y flujo sin huecos ===== */
+@media print{
+ #reporte .rh{display:grid;grid-template-columns:30mm 1fr 52mm;align-items:center;gap:10px;border-bottom:3px solid #0b3a7a;padding-bottom:8px}
+ #reporte .rh-l{display:flex;justify-content:flex-start}#reporte .rh-r{display:flex;justify-content:flex-end;gap:6px}
+ #reporte .rh img{width:23mm;height:23mm;object-fit:contain}
+ #reporte .rh-t{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1px;letter-spacing:0;text-transform:none}
+ #reporte .rh-t b{font-size:12.5pt;font-weight:800;color:#0b3a7a;text-transform:uppercase;letter-spacing:.06em}
+ #reporte .rh-t span{font-size:8pt;font-weight:700;color:#485b7c;text-transform:uppercase;letter-spacing:.07em}
+ #reporte .rt{margin:12px 0 8px;text-align:center}
+ #reporte .rt h2{margin:0;font-size:21pt;line-height:1.1;color:#0b1b3a;letter-spacing:.02em}
+ #reporte .rt p{margin:3px 0 0;font-size:10.5pt;font-weight:700;color:#0e7490;text-transform:uppercase;letter-spacing:.12em}
+ #reporte .rp{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 8px;margin:0 0 10px}
+ #reporte .rp span{display:flex;flex-direction:column;gap:1px;padding:4px 12px;border:1px solid #cfe0ee;background:#f2f8fc;border-radius:8px;text-align:center}
+ #reporte .rp i{font-style:normal;font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase;color:#485b7c;font-weight:700}
+ #reporte .rp b{font-size:9.5pt;color:#0b1b3a}
+ #reporte .rp span:first-child{background:#0b3a7a;border-color:#0b3a7a}#reporte .rp span:first-child i{color:#bcd6f2}#reporte .rp span:first-child b{color:#fff;font-size:11pt}
+ #reporte .kp:empty{display:none}
+ #reporte .k small{font-size:7.5pt}
+ #reporte .gr{display:block;margin-top:10px}
+ #reporte .gr .card{display:block;width:auto;margin:0 0 8px;break-inside:avoid;background:#f7f9fc;border:1px solid #d3dced;box-shadow:none!important}
+ #reporte .gsec{margin:0 0 4px}
+ #reporte .gsec>h4.sec{break-after:avoid;margin:6px 0 6px;padding:3px 10px;border-left:5px solid #0e7490;background:#e8f3f8;color:#0b3a7a;font-size:9.5pt;text-transform:uppercase;letter-spacing:.14em;font-weight:800}
+ #reporte .gcols{display:flex;gap:8px;align-items:flex-start}#reporte .gcol{flex:1 1 0;min-width:0}
+ #reporte .gr .card.wide>div:last-child{column-count:2;column-gap:16px}
+ #reporte .gr .card.wide .hb{margin:0 0 7px}
+ #reporte .card .hb{break-inside:avoid}
+ #reporte .gg span{font-size:6.4pt;text-align:center;white-space:nowrap;overflow:visible}
+ #reporte .card h3{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;padding-bottom:5px;border-bottom:1.5px solid #cfe0ee;font-size:8.5pt;letter-spacing:.09em;color:#0b3a7a}
+ #reporte .card h3 .ct{min-width:0}
+ #reporte .hb{margin:5px 0;gap:6px;grid-template-columns:minmax(26mm,40%) 1fr auto;font-size:7.8pt}
+ #reporte .hb .ht{height:8px}
+ #reporte .ytag{flex:none;white-space:nowrap;background:#0e7490;color:#fff;border-radius:99px;padding:1px 9px;font-size:7.5pt;letter-spacing:.04em;font-weight:800;text-transform:none}
+ #reporte .rf{break-before:avoid}
+ #reporte .rx-h b{display:block;font-size:11pt;letter-spacing:.06em;color:#0b3a7a}
+ #reporte .rx-h .og{display:block;margin-bottom:4px;font-size:7.5pt;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#485b7c}
+}
+
 </style>
 <script>(function(){var t="dark";try{t=localStorage.getItem("tema")||"dark"}catch(e){}if(t!=="light")t="dark";document.documentElement.setAttribute("data-theme",t);var m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute("content",t==="light"?"#d9dce2":"#070b1a")})()</script>
 </head>
@@ -547,14 +584,14 @@ const CAN=['VIOLENCIA INTERVECINAL','VIOLENCIA INTRAFAMILIAR','CRISIS SITUACIONA
 const sm=(rr,f)=>{const m=new Map();rr.forEach(r=>{const k=f(r);m.set(k,(m.get(k)||0)+r.n)});return m};
 const vd=(a,b)=>{const p=vr(a,b);return p==null?'–':`<span class="${p>0?'rx-up':p<0?'rx-dw':''}">${Math.abs(p).toFixed(0)}% ${p>0?'▲':p<0?'▼':'='}</span>`};
 function repX(t){const rp=$('#reporte'),now=new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'long',year:'numeric'}),cur_=YEARS.at(-1),sp=partial&&Math.max(A,B)===cur_,pt=sp?'enero a '+MF[cutM]:'enero a diciembre';
- const hd=(l2,l3)=>`<div class="rx-h"><img src="${$('#lPT').src}" alt=""><div><b>Policía de Tucumán · Departamento Operaciones Policiales D-3 · Sección Estadística y Archivo</b><h2>Homicidios dolosos</h2><p>${l2}</p><em>${l3}</em></div><img src="${$('#lD3').src}" alt=""></div>`;
+ const hd=(l2,l3)=>`<div class="rx-h"><img src="${$('#lPT').src}" alt=""><div><b>Policía de Tucumán</b><span class="og">Departamento Operaciones Policiales D-3 · Sección Estadística y Archivo</span><h2>Homicidios dolosos</h2><p>${l2}</p><em>${l3}</em></div><img src="${$('#lD3').src}" alt=""></div>`;
  let x='';
  if(t==='r1'){const a=ind(yrows(A,sp,0)),b=ind(yrows(B,sp,0)),d=b.v-a.v,p=vr(a.v,b.v),n=sp?cutM+1:12,ma=Array(12).fill(0),mb=Array(12).fill(0);
   yrows(A,sp,0).forEach(r=>ma[r.m]+=r.n);yrows(B,sp,0).forEach(r=>mb[r.m]+=r.n);
   const bar=(v,m)=>`<div class="rx-bar"><i style="width:${v/m*100}%"></i><b>${v}</b></div>`;
-  x=hd(`COMPARATIVO AÑO <u>${A}</u> / <u>${B}</u> (${UP(pt)})`,'- Ámbito Provincia de Tucumán -')+`<div class="rx-t">Víctimas de homicidios dolosos: cuadro comparativo / porcentual año <u>${A}</u>/<u>${B}</u></div>
+  x=hd(`COMPARATIVO AÑO <u>${A}</u> / <u>${B}</u>`,`${UP(pt)} · Ámbito Provincia de Tucumán`)+`<div class="rx-t">Víctimas de homicidios dolosos: cuadro comparativo / porcentual año <u>${A}</u>/<u>${B}</u></div>
   <table class="rx"><thead><tr><th>Indicador</th><th>${UP(pt)} ${A}</th><th>${UP(pt)} ${B}</th><th>Dif. %</th></tr></thead><tbody>${[['Víctimas','v'],['Causas','c'],['Femicidios','f']].map(([l,k])=>`<tr><td>${l}</td><td>${bar(a[k],Math.max(1,a[k],b[k]))}</td><td>${bar(b[k],Math.max(1,a[k],b[k]))}</td><td>${vd(a[k],b[k])}</td></tr>`).join('')}</tbody></table>
-  <div class="rx-s">En el período de ${pt} de ${B} se registraron <b>${b.v} víctimas</b> de homicidio doloso (${b.c} causas), ${d===0?'la misma cantidad que':`<b>${Math.abs(d)} ${d>0?'más':'menos'}</b> que en`} igual período de ${A} (${A}: ${a.v})${p==null?'':`, una variación de <b>${p>0?'+':''}${p.toFixed(0)}%</b>`}. Femicidios: ${b.f} (${A}: ${a.f}).</div><div class="gr" style="grid-template-columns:1fr"><div class="card"><h3>Víctimas por mes</h3><div id="rxg"></div></div></div>`}
+  <div class="rx-s">En el período de ${pt} de ${B} se registraron <b>${b.v} víctimas</b> de homicidio doloso (${b.c} causas), ${d===0?'la misma cantidad que':`<b>${Math.abs(d)} ${d>0?'más':'menos'}</b> que en`} igual período de ${A} (${A}: ${a.v})${p==null?'':`, una variación de <b>${p>0?'+':''}${p.toFixed(0)}%</b>`}. Femicidios: ${b.f} (${A}: ${a.f}).</div><div class="gr" style="column-count:1"><div class="card"><h3><span class="ct">Víctimas por mes</span><span class="ytag">${A} vs ${B}</span></h3><div id="rxg"></div></div></div>`}
  if(t==='r2'){const s2=partial&&B===cur_,rr=yrows(B,s2,0),m=[...sm(rr,r=>r.mo)].sort((p,q)=>q[1]-p[1]),tot=m.reduce((q,z)=>q+z[1],0)||1,top=m.slice(0,3);
   x=hd(`RESUMEN POR MÓVIL DEL CRIMEN · <u>${B}</u>`,'- Ámbito Provincia de Tucumán -')+`<div class="rx-t">Período: 01 enero al ${s2?cutD+' '+MF[cutM]:'31 diciembre'} ${B}</div>
   <table class="rx"><thead><tr><th>Móvil del crimen</th><th>Cantidad de víctimas por móvil</th><th>%</th></tr></thead><tbody>${m.map(([k,v])=>`<tr class="${k==='FEMICIDIO'?'fe':''}"><td>${k==='FEMICIDIO'?'♀ ':''}${lm(k)}</td><td><div class="rx-bar"><i style="width:${v/m[0][1]*100}%"></i><b>${v}</b></div></td><td>${Math.round(v/tot*100)}%</td></tr>`).join('')}<tr class="tot"><td>Total de víctimas</td><td>${rr.reduce((q,r)=>q+r.n,0)}</td><td>100%</td></tr></tbody></table>
@@ -568,7 +605,7 @@ function repX(t){const rp=$('#reporte'),now=new Date().toLocaleDateString('es-AR
  if(t==='r3'){const st=document.createElement('style');st.id='pgs';st.textContent='@page{size:A4 landscape;margin:9mm}';document.head.appendChild(st)}
  document.body.classList.add('printing');setTimeout(()=>window.print(),200)}
 const TITLES={gen:'Informe General',cmp:'Informe Comparativo',fem:'Informe Femicidios'};
-function fill(box,secs){box.innerHTML='';secs.forEach(([h,f,w])=>{const c=document.createElement('div');c.className='card'+(w?' w':'');c.innerHTML=`<h3>${h}</h3><div></div>`;box.appendChild(c);f(c.lastChild)})}
+function fill(box,secs,tagf){box.innerHTML='';secs.forEach(([h,f,w])=>{const c=document.createElement('div');c.className='card'+(w?' w':'');c.dataset.t=h.replace(/<small>.*$/,'');const tg=tagf?tagf(h):'';c.innerHTML=tagf?`<h3><span class="ct">${h}</span>${tg?`<span class="ytag">${tg}</span>`:''}</h3><div></div>`:`<h3>${h}</h3><div></div>`;box.appendChild(c);f(c.lastChild)})}
 function hero(){const rr=cur(),i=ind(rr),ys_=yearsSel(),pf=i.v?(i.f/i.v*100).toFixed(1).replace('.',','):'0';
  const chips=k=>`<div class="yr">${ys_.map(y=>`<span>${y} · <b>${ys(y)[k]}</b></span>`).join('')}</div>`;
  return`<div class="k"><span class="lab">Causas</span><b data-to="${i.c}">${i.c}</b><small>Causas de homicidio doloso registradas</small>${chips('c')}</div>
@@ -595,15 +632,31 @@ function show(t){tab=t;document.body.classList.toggle('cmp',t==='cmp');document.
  document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===t))}
 /* Informe PDF */
 function informe(t){forceLight=true;try{return informe0(t)}finally{forceLight=false}}
-function informe0(t){if(t[0]==='r')return repX(t);const rp=$('#reporte'),ys_=yearsSel(),now=new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'long',year:'numeric'});
+const GRP=[['Evolución',/^(Evoluci|Femicidios por a|Incidencia)/],['Ubicación geográfica',/^(Unidad Regional|Jurisdicci|Departamento|Localidad)/],['Características del hecho',/^(Mecanismo|Móvil|Ámbito|Tipo de lugar)/],['Momento del hecho',/^(Franja|Día de la|Distribución mensual)/],['Víctimas',/^(Sexo|Edad)/],['Mapa territorial',/^Mapa/]];
+function perTxt(){const y=yearsSel(),b=y.length>1?y[0]+' – '+y.at(-1):String(y[0]);return b+(partial&&sel.has(YEARS.at(-1))?' · ene–'+MESES[cutM0].toLowerCase():'')}
+function informe0(t){if(t[0]==='r')return repX(t);const rp=$('#reporte'),ys_=yearsSel(),now=new Date().toLocaleDateString('es-AR',{day:'2-digit',month:'long',year:'numeric'}),ALLY=YEARS[0]+' – '+YEARS.at(-1);
  rp.className='light';
- rp.innerHTML=`<div class="rh"><img src="${$('#lPT').src}" alt=""><div>Policía de Tucumán<br>Departamento Operaciones Policiales D-3<br>Sección Estadística y Archivo</div><img src="${$('#lD3').src}" alt=""><img src="${$('#lES').src}" alt=""></div>
- <h2>${TITLES[t]} · Homicidios Dolosos · Provincia de Tucumán</h2>
- <div class="meta">Período: ${t==='cmp'?cmpYears().join(', '):ys_.length>1?ys_[0]+' – '+ys_.at(-1):ys_[0]} · Datos al ${fdate(CORTE)} · Emitido el ${now}${t==='cmp'?' · Base: '+(mode==='same'?'mismo período':'año completo'):''}</div>
- <div class="kp">${t==='cmp'?'':hero()}</div><div class="gr"></div>
- <div class="rf">Policía de Tucumán · D-3 · Sección Estadística y Archivo — Documento generado desde el tablero digital. Datos agregados, sin información personal.</div>`;
+ const cmpT=t==='cmp',cy_=cmpYears(),per=cmpT?(cy_.length>2?cy_[0]+' – '+cy_.at(-1):cy_.join(' vs ')):perTxt(),
+  fl=[];if(!cmpT){if(selM.size<12)fl.push('Meses: '+MESES.filter((_,i)=>selM.has(i)).join(', '));if(selR.size<URS.length)fl.push('Regionales: '+URS.filter(u=>selR.has(u)).join(', '))}
+ rp.innerHTML=`<div class="rh"><div class="rh-l"><img src="${$('#lPT').src}" alt=""></div><div class="rh-t"><b>Policía de Tucumán</b><span>Departamento Operaciones Policiales D-3</span><span>Sección Estadística y Archivo</span></div><div class="rh-r"><img src="${$('#lD3').src}" alt=""><img src="${$('#lES').src}" alt=""></div></div>
+ <div class="rt"><h2>${TITLES[t]}</h2><p>Homicidios dolosos · Provincia de Tucumán</p></div>
+ <div class="rp"><span><i>${cmpT?'Años comparados':'Período'}</i><b>${cmpT?cy_.join(' · '):per}</b></span>${cmpT?`<span><i>Base</i><b>${mode==='same'?'Mismo período (01/01 al '+cutTxt+')':'Año completo'}</b></span>`:''}${fl.length?`<span><i>Filtros</i><b>${fl.join(' · ')}</b></span>`:''}<span><i>Datos al</i><b>${fdate(CORTE)}</b></span><span><i>Emitido</i><b>${now}</b></span></div>
+ <div class="kp">${cmpT?'':hero()}</div><div class="gr"></div>
+ <div class="rf">${partial&&(cmpT?mode!=='same'&&cmpYears().includes(YEARS.at(-1)):true)?`* Año en curso, con datos al ${fdate(CORTE)}.<br>`:''}Policía de Tucumán · D-3 · Sección Estadística y Archivo — Documento generado desde el tablero digital. Datos agregados, sin información personal.</div>`;
  rp.querySelectorAll('[data-to]').forEach(e=>e.textContent=e.dataset.to);
- fill(rp.querySelector('.gr'),SEC[t]());
+ if(ys_.length===1)rp.querySelectorAll('.k .yr').forEach(e=>e.remove());
+ const gr=rp.querySelector('.gr');
+ fill(gr,SEC[t](),h=>cmpT?(h==='Filtros aplicados'?'':per):(/^(Evoluci|Femicidios por a|Incidencia)/.test(h)?ALLY:per));
+ if(!cmpT){const gi=c=>{const i=GRP.findIndex(g=>g[1].test(c.dataset.t));return i<0?GRP.length:i},
+  est=c=>c.querySelectorAll('.hb').length*6.5+(c.querySelector('.gc')?58:0)+(c.querySelector('.dn')?50+c.querySelectorAll('.dn li').length*5:0)+12,
+  cs=[...gr.children].sort((a,b)=>gi(a)-gi(b));gr.innerHTML='';
+  for(let i=0;i<=GRP.length;i++){const g=cs.filter(c=>gi(c)===i);if(!g.length)continue;
+   const sec=document.createElement('section');sec.className='gsec';const h=document.createElement('h4');h.className='sec';h.textContent=(GRP[i]||['Otros'])[0];sec.appendChild(h);
+   g.forEach(c=>{if(c.querySelectorAll('.hb').length>12)c.classList.add('wide')});const nrm=g.filter(c=>!c.classList.contains('w')&&!c.classList.contains('wide')&&!c.querySelector('.mp-box')),full=g.filter(c=>!nrm.includes(c));
+   if(nrm.length){const row=document.createElement('div'),L=document.createElement('div'),Rt=document.createElement('div');row.className='gcols';L.className=Rt.className='gcol';row.append(L,Rt);let hl=0,hr=0;
+    nrm.forEach(c=>{const e=est(c);if(hl<=hr){L.appendChild(c);hl+=e}else{Rt.appendChild(c);hr+=e}});sec.appendChild(row)}
+   full.forEach(c=>sec.appendChild(c));
+   gr.appendChild(sec)}}
  document.body.classList.add('printing');setTimeout(()=>window.print(),200)}
 addEventListener('afterprint',()=>{document.body.classList.remove('printing');document.getElementById('pgs')?.remove()});
 /* Tema oscuro / claro */
